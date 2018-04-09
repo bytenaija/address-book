@@ -205,7 +205,8 @@ export default {
       console.log(this.contact);
     },
 		deleteContact: function(index) {
-      if(index){
+      console.log(index);
+      if(index !== undefined){
         	if (confirm("Are you sure you want to delete this contact?")) {
 				this.contacts.splice(index, 1);
 			}
@@ -293,6 +294,7 @@ animation-timing-function:ease-in-out;
 
 .card-body{
   text-align: left;
+  z-index: 200;
 }
 
 .card-header{
@@ -374,6 +376,11 @@ animation-timing-function:ease-in-out;
 
 .card-body{
   text-align: left;
+  z-index: 200;
+}
+
+.card{
+  z-index: 200;
 }
 
 .card-header{
