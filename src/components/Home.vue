@@ -305,7 +305,7 @@ animation-timing-function:ease-in-out;
   text-align: left;
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 1500px) {
 .row{
   margin-top: 3rem;
 }
