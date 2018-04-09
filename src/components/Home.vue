@@ -9,7 +9,7 @@
   <b-collapse is-nav id="nav_collapse">
 
     <b-navbar-nav>
-      <b-nav-item href="#" @click="add='true'">Add Contact</b-nav-item>
+      <b-nav-item href="#"  @click="add=true; edit=false; contact={}; showModal=true">Add Contact</b-nav-item>
       <b-nav-item href="#"  @click="deleteContact()">Delete all Contacts</b-nav-item>
     </b-navbar-nav>
 
@@ -18,15 +18,15 @@
   </b-collapse>
 </b-navbar>
 <div class="address-book text-center">
-<button class="btn btn-primary col-md-3" @click="add='true'; contact=''">Add Contact</button><button class="btn btn-danger col-md-3" @click="deleteContact()">Delete All Contacts</button>
+<button class="btn btn-primary col-md-3" @click="add=true; edit=false; contact={}; showModal=true">Add Contact</button><button class="btn btn-danger col-md-3" @click="deleteContact()">Delete All Contacts</button>
 <h2> Click on each contact to view their details</h2>
   <div class="address">
-   <div v-for="(contact, index) in contacts" :key="index">
+   <div v-for="(contact, index) of contacts" :key="index">
    <div class="card">
   <div class="card-header" :id="'person' + index">
   {{contact.firstname}} {{contact.lastname}}
   <div class="float-right">
-  <button @click="editContact(index); add='true'">Edit</button>
+  <button @click="editContact(index); showModal=true">Edit</button>
    <button @click="deleteContact(index)">Delete</button>
   </div>
   </div>
@@ -43,7 +43,7 @@
 </div>
  
   </div>
-<b-modal v-model="add" @ok="addContact()" @cancel="contact=''">
+<b-modal v-model="showModal" @ok="addContact()" @cancel="contact={}">
   <div class="addEdit">
     <div class="form-group">
       <label>Firstname</label>
@@ -132,6 +132,7 @@ export default {
     return({
     index : '',
     add : false,
+    showModal : false,
     edit : false,
 		contact: { firsName :'', lastName : '', company : '', address : '', mobile : '', email : '', department : '', designation : ''},
 		contacts: [
@@ -190,8 +191,9 @@ export default {
         this.contact = { firsName :'', lastName : '', company : '', address : '', mobile : '', email : '', department : '', designation : ''};
       }else{
         if (this.contact.firstname) {
-          this.contact.id = contacts.length;
+          this.contact.id = this.contacts.length;
           this.contacts.push(this.contact);
+          console.log(this.contacts)
           this.contact = { firsName :'', lastName : '', company : '', address : '', mobile : '', email : '', department : '', designation : ''};
         }
       }
@@ -275,6 +277,87 @@ animation-timing-function:ease-in-out;
 
   .address{
     display:grid;
+    grid-template-columns: 1fr;
+    grid-gap:1rem;
+    
+  }
+
+  .address-book{
+    width: 70%;
+    margin: 2rem auto;
+  }
+
+.btn{
+  margin: 2rem;
+}
+
+.card-body{
+  text-align: left;
+}
+
+.card-header{
+  cursor: pointer;
+}
+
+.addEdit{
+  text-align: left;
+}
+
+@media only screen and (min-width: 750px) {
+.row{
+  margin-top: 3rem;
+}
+h1, h2 {
+  font-weight: normal;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+.grp{
+  position:relative;
+  bottom:50%;
+  display: none;
+}
+
+.anim{
+animation : reveal;
+animation-delay: 0s;
+animation-duration:7s;
+animation-fill-mode: forwards;
+animation-timing-function:ease-in-out;
+}
+
+@keyframes reveal {
+  0%{
+    display:none;
+    bottom: 50%
+  } 
+
+  10%{
+    display:none;
+    bottom: 40%
+  }
+  25%{
+    display:block;
+    bottom: 30%
+  }
+
+  100%{
+    display:block;
+    bottom: 0%;
+  }
+}
+
+  .address{
+    display:grid;
     grid-template-columns: repeat(3, 400px);
     grid-gap:1rem;
     
@@ -300,4 +383,7 @@ animation-timing-function:ease-in-out;
 .addEdit{
   text-align: left;
 }
+}
+  
+
 </style>
